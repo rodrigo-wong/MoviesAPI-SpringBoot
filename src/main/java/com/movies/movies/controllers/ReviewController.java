@@ -1,0 +1,26 @@
+package com.movies.movies.controllers;
+
+import com.movies.movies.models.Review;
+import com.movies.movies.services.ReviewService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.Map;
+import java.util.Optional;
+
+@RestController
+@RequestMapping("/api/v1/reviews")
+public class ReviewController {
+    @Autowired
+    private ReviewService reviewService;
+    @PostMapping
+    public ResponseEntity<Review> createReview(@RequestBody Map<String, String> payload){
+        return new ResponseEntity<Review>(reviewService.createReview(payload.get("reviewBody"), payload.get("imdbId")), HttpStatus.CREATED);
+    }
+    @PutMapping
+    public ResponseEntity<Optional<Review>> modifyReview(@RequestBody Map<String, String> payload){
+        return new ResponseEntity<Optional<Review>>(reviewService.modifyReview(payload.get("reviewBody"), payload.get("id")), HttpStatus.OK);
+    }
+}
