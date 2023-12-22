@@ -14,6 +14,10 @@ public class MoviesApplication {
 		Dotenv dotenv = Dotenv.configure().load();
 		String mongoDatabase = dotenv.get("MONGO_DATABASE");
 		String mongoUri = dotenv.get("MONGO_URI");
+		assert mongoDatabase != null;
+		System.setProperty("MONGO_DATABASE", mongoDatabase);
+		assert mongoUri != null;
+		System.setProperty("MONGO_URI", mongoUri);
 		SpringApplication.run(MoviesApplication.class, args);
 	}
 	@GetMapping("/root")
